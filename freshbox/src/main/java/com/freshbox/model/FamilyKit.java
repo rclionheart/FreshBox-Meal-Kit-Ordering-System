@@ -14,19 +14,19 @@ public class FamilyKit extends MealKit {
     // Family kits use the base price with no markup.
     // Hint: Use getBasePrice() inherited from MealKit.
     public double calculatePrice() {
-        return 0.0;
+        return getBasePrice();
     }
 
     // LEARNER_TODO: Override getDefaultServings() to return 4.
     // Family kits serve 4 people by default.
     public int getDefaultServings() {
-        return 0;
+        return 4;
     }
 
     // LEARNER_TODO: Override toDisplayString() to extend the parent's display string
     // with " | Great for families!" appended at the end.
     // Hint: You can call a parent class's version of a method using the super keyword.
     public String toDisplayString() {
-        return "todo";
+        return super.toDisplayString() + " | Great for families!";
     }
 }

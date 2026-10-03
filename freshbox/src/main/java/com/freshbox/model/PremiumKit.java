@@ -13,15 +13,16 @@ public class PremiumKit extends MealKit {
         super(name, description, recipe, ingredients, basePrice, stockQuantity, servings);
     }
 
+    private static final double PREMIUM_MULTIPLIER = 1.5;
     // LEARNER_TODO: Override calculatePrice() to return the base price multiplied
     // by PREMIUM_MULTIPLIER. Premium kits cost 1.5x the base price.
     public double calculatePrice() {
-        return 0.0;
+        return getBasePrice() * PREMIUM_MULTIPLIER;
     }
 
     // LEARNER_TODO: Override getDefaultServings() to return 2.
     // Premium kits serve 2 people by default.
     public int getDefaultServings() {
-        return 0;
+        return 2;
     }
 }

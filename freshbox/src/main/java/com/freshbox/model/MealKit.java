@@ -33,21 +33,29 @@ public abstract class MealKit implements Displayable, Comparable<MealKit> {
 
     // LEARNER_TODO: Implement isInStock() to return true if stockQuantity is greater than 0.
     public boolean isInStock() {
+        if (stockQuantity > 0) {
+            return true;
+        }
         return false;
     }
 
     // LEARNER_TODO: Implement reduceStock(int quantity) to subtract from stockQuantity.
     // If quantity exceeds stockQuantity, throw an OutOfStockException with the name,
     // requested quantity, and available stock. Otherwise, reduce stockQuantity by the amount.
-    public void reduceStock(int quantity) {
+    public void reduceStock(int quantity) throws OutOfStockException{
         //todo
+        if (quantity > stockQuantity) {
+            throw new OutOfStockException("Cannot reduce stock of " + quantity + " units if only " + stockQuantity + " units in stock");
+        } else {
+            stockQuantity -= quantity;
+        }
     }
 
     // LEARNER_TODO: Implement compareTo() to compare meal kits by their calculated price.
     // Hint: The Double class has a static method for comparing double values.
     @Override
     public int compareTo(MealKit other) {
-        return 0;
+        return Double.compare(this.calculatePrice(), other.calculatePrice());
     }
 
     // LEARNER_TODO: Implement toDisplayString() to return a formatted string like:
@@ -56,7 +64,11 @@ public abstract class MealKit implements Displayable, Comparable<MealKit> {
     // Hint: String.format() can format decimal numbers to a fixed number of places.
     @Override
     public String toDisplayString() {
-        return name;
+        if (isInStock()) {
+            return String.format("Kit Name - $%.2f (In Stock)", calculatePrice());
+        } else {
+            return String.format("Kit Name - $%.2f (Out of Stock)", calculatePrice());
+        }
     }
 
     public int getId() {
