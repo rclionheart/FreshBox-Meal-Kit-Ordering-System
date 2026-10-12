@@ -8,14 +8,15 @@ public class Customer implements Displayable {
 
     public Customer(String name, String email) {
         this.name = name;
-        setEmail(email);
+        this.email = email;
     }
 
     // LEARNER_TODO: Implement this overloaded constructor.
     // Set the name field from the parameter, and set email to an empty string "".
     // This constructor allows creating a Customer without an email address.
     public Customer(String name) {
-        // set fields here
+        this.name = name;
+        this.email = "";
     }
 
     public int getId() {
@@ -46,7 +47,25 @@ public class Customer implements Displayable {
     //
     // Hint: The String class has methods for finding character positions and extracting substrings.
     public void setEmail(String email) {
-        this.email = (email == null) ? "" : email;
+        if (email == null || email.isEmpty()) {
+            this.email = email;
+            return;
+        }
+        if (email.indexOf("@") == -1 || email.indexOf("@") != email.lastIndexOf("@")) {
+            throw new IllegalArgumentException("Email must contain exactly one '@' symbol.");
+        }
+        int atIndex = email.indexOf("@");
+        if (atIndex == 0) {
+            throw new IllegalArgumentException("Email must have content before the '@' symbol.");
+        }
+        if (atIndex == email.length() - 1) {
+            throw new IllegalArgumentException("Email must have content after the '@' symbol.");
+        }
+        String domainPart = email.substring(atIndex + 1);
+        if (!domainPart.contains(".")) {
+            throw new IllegalArgumentException("Email domain must contain a '.' symbol.");
+        }
+        this.email = email;
     }
 
     @Override
