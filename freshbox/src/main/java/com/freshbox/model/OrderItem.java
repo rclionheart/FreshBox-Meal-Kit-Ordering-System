@@ -11,6 +11,12 @@ public class OrderItem implements Displayable {
     //   2. Throw IllegalArgumentException if quantity is less than or equal to 0
     //   3. Assign both fields
     public OrderItem(MealKit mealKit, int quantity) {
+        if (mealKit == null) {
+            throw new IllegalArgumentException("MealKit cannot be null");
+        }
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than 0");
+        }
         this.mealKit = mealKit;
         this.quantity = quantity;
     }
@@ -18,7 +24,7 @@ public class OrderItem implements Displayable {
     // LEARNER_TODO: Implement getLineTotal() to return the total cost for this line item.
     // Multiply the meal kit's calculated price by the quantity.
     public double getLineTotal() {
-        return 0.0;
+        return mealKit.calculatePrice() * quantity;
     }
 
     public MealKit getMealKit() {
@@ -34,6 +40,6 @@ public class OrderItem implements Displayable {
     // Hint: Use String.format() to format the dollar amount to two decimal places.
     @Override
     public String toDisplayString() {
-        return "";
+        return String.format("%s x%d - $%.2f", mealKit.getName(), quantity, getLineTotal());
     }
 }
