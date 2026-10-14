@@ -47,7 +47,15 @@ public class CatalogService {
     //   - Use getAllMealKits() to get the list to search through
     //   - Use a loop with 'continue' to skip kits that don't match, then add matching kits to the result list
     public List<MealKit> search(String query) {
-        return new ArrayList<>();
+        query = query.toLowerCase();
+        List<MealKit> matchingKits = new ArrayList<>();
+        for (MealKit kit : getAllMealKits()) {
+            if (!kit.getName().toLowerCase().contains(query)) {
+                continue;
+            }
+            matchingKits.add(kit);
+        }
+        return matchingKits;
     }
 
     // LEARNER_TODO: Implement search(String query, boolean inStockOnly) — an overloaded
@@ -57,7 +65,18 @@ public class CatalogService {
     // When inStockOnly is true, only include kits where isInStock() returns true.
     // Use 'continue' to skip non-matching items (guard clause pattern).
     public List<MealKit> search(String query, boolean inStockOnly) {
-        return new ArrayList<>();
+        query = query.toLowerCase();
+        List<MealKit> matchingKits = new ArrayList<>();
+        for (MealKit kit : getAllMealKits()) {
+            if (!kit.getName().toLowerCase().contains(query)) {
+                continue;
+            }
+            if (inStockOnly && !kit.isInStock()) {
+                continue;
+            }
+            matchingKits.add(kit);
+        }
+        return matchingKits;
     }
 
     public void displayCatalog() {
@@ -77,6 +96,13 @@ public class CatalogService {
     // LEARNER_TODO: Implement getInStockKits() to return only meal kits where isInStock() is true.
     // Loop through getAllMealKits() and use 'continue' to skip out-of-stock kits, adding only in-stock kits to the result list.
     public List<MealKit> getInStockKits() {
-        return new ArrayList<>();
+        List<MealKit> inStockKits = new ArrayList<>();
+        for (MealKit kit : getAllMealKits()) {
+            if (!kit.isInStock()) {
+                continue;
+            }
+            inStockKits.add(kit);
+        }
+        return inStockKits;
     }
 }

@@ -15,38 +15,50 @@ public class Catalog<T extends MealKit> {
 
     // LEARNER_TODO: Implement the constructor to initialize 'items' as a new HashMap
     // and 'nextId' to 0.
+    private Map<Integer, T> items = new HashMap<>();
+    private int nextId = 0;
+
     public Catalog() {
+        this.items = new HashMap<>();
+        this.nextId = 0;
     }
 
     // LEARNER_TODO: Implement add(T item) to assign an auto-incrementing ID and store the item.
     // Use pre-increment (++nextId) to generate a new ID, set it on the item, and store the item in the map.
     public void add(T item) {
+        int id = ++nextId;
+        item.setId(id);
+        items.put(id, item);
     }
 
     // LEARNER_TODO: Implement get(int id) to retrieve an item by its ID from the map.
     // Return null if the ID is not found.
     public T get(int id) {
-        return null;
+        if (items.containsKey(id)) {
+            return items.get(id);
+        } else {
+            return null;
+        }
     }
 
     // LEARNER_TODO: Implement getAll() to return all items as a new ArrayList.
     // Hint: Consider how to convert a Map's values() into a List.
     public List<T> getAll() {
-        return new ArrayList<>();
+        return new ArrayList<>(items.values());
     }
 
     // LEARNER_TODO: Implement size() to return the number of items in the catalog.
     public int size() {
-        return 0;
+        return items.size();
     }
 
     // LEARNER_TODO: Implement contains(int id) to check if the map contains the given ID.
     public boolean contains(int id) {
-        return false;
+        return items.containsKey(id);
     }
 
     // LEARNER_TODO: Implement isEmpty() to check if the catalog has no items.
     public boolean isEmpty() {
-        return true;
+        return items.isEmpty();
     }
 }
