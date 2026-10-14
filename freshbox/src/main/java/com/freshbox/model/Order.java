@@ -65,12 +65,17 @@ public class Order implements Displayable {
     // Create a new OrderItem from the kit and quantity, then call the other addItem method.
     // Hint: This method should delegate to addItem(OrderItem).
     public void addItem(MealKit kit, int quantity) {
+        addItem(new OrderItem(kit, quantity));
     }
 
     // LEARNER_TODO: Implement calculateTotal() to sum all order item line totals.
     // Loop through the items list and add up each item's getLineTotal().
     public double calculateTotal() {
-        return 0.0;
+        double total = 0.0;
+        for (OrderItem item : items) {
+            total += item.getLineTotal();
+        };
+        return total;
     }
 
     // LEARNER_TODO: Implement toDisplayString() to return a summary like:
@@ -78,7 +83,7 @@ public class Order implements Displayable {
     // Hint: Use String.format() to format the dollar amount to two decimal places.
     @Override
     public String toDisplayString() {
-        return "Order #" + id;
+        return "Order #" + id + ": " + items.size() + " items, $" + String.format("%.2f", calculateTotal()) + ", Status: " + status;
     }
 
     // LEARNER_TODO: Implement toSummary() using StringBuilder to build a detailed order summary.
@@ -94,6 +99,11 @@ public class Order implements Displayable {
         if (items.isEmpty()) {
             return "Order #" + id + ": No items";
         }
-        return "Order #" + id;
+        StringBuilder summary = new StringBuilder();
+        summary.append("Order #").append(id).append(": ").append(customer.getName()).append(", Delivery Date: ").append(deliveryDate.format(DATE_FORMATTER)).append("\n");
+        for (int i = 0; i < items.size(); i++) {
+            summary.append(i + 1).append(". ").append(items.get(i).toDisplayString()).append("\n");
+        }
+        return summary.append("Total: $").append(String.format("%.2f", calculateTotal())).append(", Status: ").append(status).toString();
     }
 }
